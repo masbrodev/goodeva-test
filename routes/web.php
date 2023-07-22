@@ -22,14 +22,6 @@ Route::get('/', function () {
     return redirect('/home');
 });
 
-Auth::routes([
-    'register' => true, // Registration Routes...
-    'reset' => false, // Password Reset Routes...
-    'verify' => false, // Email Verification Routes...
-]);
-
-// Route::group(['middleware' => 'auth'], function () {
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('suratmasuk', 'SuratMasukController', [
@@ -60,7 +52,6 @@ Route::delete('suratkeluar/destroy/{id}',  'SuratKeluarController@destroy');
 Route::get('get_berkas_sk/{id}', 'SuratKeluarController@get_berkas');
 Route::get('del_berkas/surat_keluar/{id}', 'SuratKeluarController@del_berkas_sk');
 
-// Route::resource('profil', 'UserController');
 
 Route::get('/home2', 'HomeController@home2');
 
@@ -71,4 +62,3 @@ Route::post('karyawan/tambah', 'UserController@tambah');
 Route::get('karyawan/hapus/{id}', 'UserController@hapus');
 Route::post('karyawan/edit/{id}', 'UserController@edit');
 Route::post('karyawan/import', 'UserController@import');
-// });
