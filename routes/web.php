@@ -28,7 +28,7 @@ Auth::routes([
     'verify' => false, // Email Verification Routes...
 ]);
 
-Route::group(['middleware' => 'auth'], function () {
+// Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
@@ -61,4 +61,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('del_berkas/surat_keluar/{id}', 'SuratKeluarController@del_berkas_sk');
 
     Route::resource('profil', 'UserController');
-});
+// });
