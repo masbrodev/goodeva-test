@@ -3,13 +3,13 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="card card-warning">
                                 <div class="card-header">
                                     <h3 class="card-title">Grafik Absensi Keseluruhan</h3>
@@ -22,6 +22,23 @@
                                 </div>
                                 <div class="card-body">
                                     <canvas id="donutChart" style="height:230px; min-height:386px"></canvas>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card card-warning">
+                                <div class="card-header">
+                                    <h3 class="card-title">Grafik Absensi Keseluruhan (RPM)</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="donutChart2" style="height:230px; min-height:386px"></canvas>
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -85,8 +102,6 @@
         maintainAspectRatio: false,
         responsive: true,
     }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
     var donutChart = new Chart(donutChartCanvas, {
         type: 'doughnut',
         data: donutData,
@@ -94,30 +109,52 @@
     })
 
 
+    //2
+    var donutChartCanvas2 = $('#donutChart2').get(0).getContext('2d')
+    var donutData2 = {
+        labels: ['Ontime', 'Telat'],
+        datasets: [{
+            data: [`{{ $ontime }}`, `{{ $telat }}`],
+            backgroundColor: [rgb(), rgb()],
+        }]
+    }
+
+    var donutOptions2 = {
+        maintainAspectRatio: false,
+        responsive: true,
+        rotation: -90,
+        circumference: 180
+    }
+    var donutChart2 = new Chart(donutChartCanvas2, {
+        type: 'doughnut',
+        data: donutData2,
+        options: donutOptions2
+    })
+
+
     var labels = <?php echo json_encode($labels); ?>;
-        var dataTelat = <?php echo json_encode($dataTelat); ?>;
-        var dataOntime = <?php echo json_encode($dataOntime); ?>;
+    var dataTelat = <?php echo json_encode($dataTelat); ?>;
+    var dataOntime = <?php echo json_encode($dataOntime); ?>;
 
     var data = {
         labels: labels,
         datasets: [{
-            label: "Ontime",
-            backgroundColor: "rgba(75, 192, 192, 0.2)",
-            borderColor: "rgba(75, 192, 192, 1)",
-            borderWidth: 2,
-            data: dataOntime,
-        },
-        {
-            label: "Telat",
-            backgroundColor: rgba(),
-            borderColor: rgba(),
-            borderWidth: 2,
-            data: dataTelat,
-        },
-    ]
+                label: "Ontime",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 2,
+                data: dataOntime,
+            },
+            {
+                label: "Telat",
+                backgroundColor: rgba(),
+                borderColor: rgba(),
+                borderWidth: 2,
+                data: dataTelat,
+            },
+        ]
     };
 
-    // Opsi konfigurasi grafik area
     var options = {
         scales: {
             y: {
@@ -126,7 +163,6 @@
         }
     };
 
-    // Membuat grafik area
     var areaChartCanvas = document.getElementById('areaChart').getContext('2d');
     var areaChart = new Chart(areaChartCanvas, {
         type: 'line',

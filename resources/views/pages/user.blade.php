@@ -14,7 +14,8 @@
 
             <div class="card-tools">
                 <ul class="pagination pagination-sm float-right">
-                    <button type="button" class="btn btn-block bg-gradient-primary" data-toggle="modal" data-target="#tambah-kategori">Tambah</button>
+                    <a class="btn btn-block bg-gradient-danger" href="{{ URL::to('delete-all-karyawan') }}">Hapus Semua Data</a>
+                    <button type="button" class="btn btn-block bg-gradient-primary" data-toggle="modal" data-target="#tambah-kategori">Tambah Karyawan</button>
                 </ul>
             </div>
         </div>
@@ -56,7 +57,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tambah Plilihan Kategori</h4>
+                <h4 class="modal-title">Tambah Karyawan</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -72,11 +73,11 @@
                         <input type="text" class="form-control" placeholder="Masukkan Email Kategori" name="email">
 
                         <label>Password</label>
-                        <input type="password" class="form-control" placeholder="Masukkan Password Kategori" name="password">
+                        <input type="password" class="form-control" placeholder="Masukkan Password" name="password">
 
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="s">Simpan</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
                 </form>
@@ -87,6 +88,44 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+
+<div class="modal fade" id="import">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Import Data Karyawan</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ URL::to('karyawan/import')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label>Import File Excel</label>
+
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="file" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+                                <label class="custom-file-label" for="inputGroupFile04">Pilih File</label>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 
 @foreach($karyawan as $r)
 <div class="modal fade" id="edit-kar{{ $loop->iteration }}">
@@ -113,7 +152,7 @@
 
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="s">Simpan</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
                 </form>
@@ -129,18 +168,32 @@
 
 
 @section('js')
+{!! Toastr::message() !!}
 <script>
     $(function() {
         $("#table-kategori").DataTable({
             dom: 'Bfrtip',
             buttons: [{
-                extend: 'excel',
-                text: 'Export',
-                exportOptions: {
-                    columns: ':not(.notexport)'
+                    extend: 'excel',
+                    text: 'Export',
+                    className: 'btn btn-primary',
+                    exportOptions: {
+                        columns: ':not(.notexport)'
+                    }
+                },
+                {
+                    text: 'Import',
+                    action: function(e, dt, node, config) {
+                        $('#import').modal('show');
+                    }
                 }
-            }]
+            ]
         });
     });
+
+    $('#inputGroupFile04').on('change', function(e) {
+        var fileName = e.target.files[0].name;
+        $(this).next('.custom-file-label').html(fileName);
+    })
 </script>
 @stop

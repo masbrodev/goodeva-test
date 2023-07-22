@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Absen::class, 'user_id', 'id');
     }
+
+    public static function truncateUsersTable()
+    {
+        self::truncate();
+    }
 }

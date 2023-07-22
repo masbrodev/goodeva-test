@@ -27,9 +27,12 @@ Route::get('kategori/hapus/{id}', 'KategoriController@hapus');
 
 Route::get('absen', 'AbsenController@index');
 Route::get('karyawan', 'UserController@index');
+Route::get('delete-all-karyawan', 'UserController@dell');
 Route::post('karyawan/tambah', 'UserController@tambah');
 Route::get('karyawan/hapus/{id}', 'UserController@hapus');
 Route::post('karyawan/edit/{id}', 'UserController@edit');
+Route::post('karyawan/import', 'UserController@import');
+
 
 
 
