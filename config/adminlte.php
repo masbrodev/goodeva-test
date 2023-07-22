@@ -259,11 +259,21 @@ return [
             'icon' => 'fa fa-cube',
             'url'  => 'suratkeluar',
         ],
-        ['header' => 'Pengaturan'],
+        ['header' => 'Goodeva'],
         [
-            'text' => 'Profil',
+            'text' => 'Dashboard',
+            'icon' => 'fas fa-fw fa-cogs',
+            'url'  => 'home2',
+        ],
+        [
+            'text' => 'Karyawan',
             'icon' => 'fas fa-fw fa-user',
-            'url'  => 'profil',
+            'url'  => 'karyawan',
+        ],
+        [
+            'text' => 'Absensi',
+            'icon' => 'fas fa-fw fa-building',
+            'url'  => 'absen',
         ],
 
     ],
@@ -340,6 +350,16 @@ return [
                     'type' => 'css',
                     'asset' => false,
                     'location' => 'https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js',
                 ],
             ],
         ],

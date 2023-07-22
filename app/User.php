@@ -36,4 +36,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function absen()
+    {
+        return $this->hasMany(Absen::class, 'user_id', 'id');
+    }
+
+    public static function truncateUsersTable()
+    {
+        self::truncate();
+    }
 }
